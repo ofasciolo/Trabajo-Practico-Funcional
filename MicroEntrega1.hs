@@ -1,9 +1,9 @@
 module MicroEntrega1 where
 
 --3.1
-data Microprocesador = Microprocesador{memoria::[Int] ,acumuladorA::Int, acumuladorB::Int, programCounter::Int,etiqueta::String} deriving Show
+data Microprocesador = Microprocesador{memoria::[Int] ,acumuladorA::Int, acumuladorB::Int, programCounter::Int,mensajeError::String} deriving Show
 --3.1.a
-xt8088 =  Microprocesador{memoria = replicate 1024 0 , acumuladorA = 0, acumuladorB = 0,programCounter = 0, etiqueta= ""}
+xt8088 =  Microprocesador{memoria = replicate 1024 0 , acumuladorA = 0, acumuladorB = 0,programCounter = 0, mensajeError= ""}
 
 
 --3.2.1
@@ -26,13 +26,13 @@ swap :: Instruccion
 swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador,programCounter = programCounter unProcesador +1}
 
 --3.3.2
-sumarDosValores valor1 valor2 unProcesador = add (lodv valor2 (swap (lodv valor1 unProcesador)))
+sumarDosValores valor1 valor2 = (add).(lodv valor2).(swap).(lodv valor1)
 
 --3.4.1
 divide :: Instruccion
 divide unProcesador   
      |acumuladorB unProcesador /=0 = unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador, acumuladorB=0,programCounter = programCounter unProcesador +1}
-     |otherwise = unProcesador{etiqueta = "DIVISION BY ZERO",programCounter = programCounter unProcesador +1} 
+     |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO",programCounter = programCounter unProcesador +1} 
 
 str :: Int->Int->Instruccion
 reemplazar :: Int->Int->[Int]->[Int]
@@ -46,10 +46,10 @@ lod :: Int->Instruccion
 lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1), programCounter = programCounter unProcesador + 1}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
 --3.4.2
-dividirDosValores valor1 valor2 unProcesador = divide(lod 1 (swap(lod 2 (str 2 valor2 (str 1 valor1 unProcesador)))))
+dividirDosValores numerador denominador = (divide).(lod 1).(swap).(lod 2).(str 2 denominador).(str 1 numerador)
 
 --4.2.3
-fp20 = Microprocesador{memoria=replicate 1024 0, acumuladorA = 7, acumuladorB = 24, programCounter = 0, etiqueta = ""}
+fp20 = Microprocesador{memoria=replicate 1024 0, acumuladorA = 7, acumuladorB = 24, programCounter = 0, mensajeError = ""}
 
 --4.3.4
-at8086 = Microprocesador {memoria =[1..20], acumuladorA = 0, acumuladorB = 0, programCounter = 0, etiqueta = ""}
+at8086 = Microprocesador {memoria =[1..20], acumuladorA = 0, acumuladorB = 0, programCounter = 0, mensajeError = ""}
