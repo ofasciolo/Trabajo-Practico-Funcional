@@ -26,7 +26,7 @@ swap :: Instruccion
 swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador,programCounter = programCounter unProcesador +1}
 
 --3.3.2
---Ver en consola
+sumarDosValores valor1 valor2 unProcesador = add (lodv valor2 (swap (lodv valor1 unProcesador)))
 
 --3.4.1
 divide :: Instruccion
