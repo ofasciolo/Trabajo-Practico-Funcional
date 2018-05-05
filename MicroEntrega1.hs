@@ -46,7 +46,7 @@ lod :: Int->Instruccion
 lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1), programCounter = programCounter unProcesador + 1}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
 --3.4.2
-dividir valor1 valor2 unProcesador = divide(lod 1 (swap(lod 2 (str 2 valor2 (str 1 valor1 unProcesador)))))
+dividirDosValores valor1 valor2 unProcesador = divide(lod 1 (swap(lod 2 (str 2 valor2 (str 1 valor1 unProcesador)))))
 
 --4.2.3
 fp20 = Microprocesador{memoria=replicate 1024 0, acumuladorA = 7, acumuladorB = 24, programCounter = 0, mensajeError = ""}
