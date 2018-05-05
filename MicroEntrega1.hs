@@ -20,7 +20,7 @@ add :: Instruccion
 add unProcesador = unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador, acumuladorB=0,programCounter = programCounter unProcesador +1}
 
 lodv :: Int->Instruccion
-lodv valor unProcesador = unProcesador{acumuladorA= acumuladorA unProcesador + valor,programCounter = programCounter unProcesador +1}
+lodv valor unProcesador = unProcesador{acumuladorA=valor,programCounter = programCounter unProcesador +1}
 
 swap :: Instruccion
 swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador,programCounter = programCounter unProcesador +1}
