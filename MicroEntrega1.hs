@@ -1,4 +1,3 @@
-
 module MicroEntrega1 where
 
 --3. Entrega 1
@@ -14,7 +13,7 @@ type Instruccion = Microprocesador->Microprocesador
 nop :: Instruccion
 nop unProcesador = unProcesador{programCounter = programCounter unProcesador +1}
 
---3.2.2 --- consola, sin terminar
+--3.2.2
 avanzar3 :: Instruccion
 avanzar3 = nop.nop.nop
 
