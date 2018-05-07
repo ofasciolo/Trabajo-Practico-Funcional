@@ -18,15 +18,22 @@ avanzar3 :: Instruccion
 avanzar3 = nop.nop.nop
 
 --3.3 Punto 3
+
+avanzarCounter :: Instrucion
+avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
+
+vaciarAcumulador :: Instruccion
+vaciarAcumulador unProccesador = unProccesador {acumuladorB = 0}
+
 --3.3.1
 add :: Instruccion
-add unProcesador = unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador, acumuladorB=0,programCounter = programCounter unProcesador +1}
+add unProcesador = avanzarCounter.vaciarAcumulador.unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador}
 
 lodv :: Int->Instruccion
-lodv valor unProcesador = unProcesador{acumuladorA=valor,programCounter = programCounter unProcesador +1}
+lodv valor unProcesador = avanzarCounter.unProcesador{acumuladorA=valor}
 
 swap :: Instruccion
-swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador,programCounter = programCounter unProcesador +1}
+swap unProcesador = avanzarCounter.unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador}
 
 --3.3.2
 sumarDosValores valor1 valor2 = (add).(lodv valor2).(swap).(lodv valor1)
@@ -35,8 +42,8 @@ sumarDosValores valor1 valor2 = (add).(lodv valor2).(swap).(lodv valor1)
 --3.4.1
 divide :: Instruccion
 divide unProcesador   
-     |acumuladorB unProcesador /=0 = unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador, acumuladorB=0,programCounter = programCounter unProcesador +1}
-     |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO",programCounter = programCounter unProcesador +1} 
+     |acumuladorB unProcesador /=0 = avanzarCounter.vaciarAcumulador.unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador}
+     |otherwise = avanzarCounter.unProcesador{mensajeError = "DIVISION BY ZERO"} 
 
 str :: Int->Int->Instruccion
 reemplazar :: Int->Int->[Int]->[Int]
@@ -44,10 +51,10 @@ reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) list
 
 -- el -1 debido a que ellos empiezan desde pos 1, y nosotros desde 0.
 
-str addr valor unProcesador = unProcesador{memoria = reemplazar addr valor (memoria unProcesador),programCounter = programCounter unProcesador + 1}
+str addr valor unProcesador = avanzarCounter.unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
 lod :: Int->Instruccion
-lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1), programCounter = programCounter unProcesador + 1}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
+lod addr unProcesador = avanzarCounter.unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
 --3.4.2
 dividirDosValores numerador denominador = (divide).(lod 1).(swap).(lod 2).(str 2 denominador).(str 1 numerador)
