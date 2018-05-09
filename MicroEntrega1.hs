@@ -19,11 +19,11 @@ avanzar3 = nop.nop.nop
 
 --3.3 Punto 3
 
-avanzarCounter :: Instrucion
+avanzarCounter :: InstruCcion
 avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
 
 vaciarAcumulador :: Instruccion
-vaciarAcumulador unProccesador = unProccesador {acumuladorB = 0}
+vaciarAcumulador unProcesador = unProcesador {acumuladorB = 0}
 
 --3.3.1
 add :: Instruccion
