@@ -71,3 +71,6 @@ at8086 = Microprocesador {memoria =[1..20], acumuladorA = 0, acumuladorB = 0, pr
 --3.3.3
 ifnz :: Int->Microprocesador->Microprocesador
 ifnz valor = swap.(lodv valor)
+
+--3.6.6
+xt8089 = Microprocesador{memoria = [0,0..] , acumuladorA = 0, acumuladorB = 0,programCounter = 0, mensajeError= ""}
