@@ -44,7 +44,7 @@ sumarDosValores valor1 valor2 = (add).(lodv valor2).(swap).(lodv valor1)
 divide :: Instruccion
 divide unProcesador   
      |acumuladorB unProcesador /=0 = avanzarCounter.vaciarAcumulador.unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador}
-     |otherwise = avanzarCounter.unProcesador{mensajeError = "DIVISION BY ZERO"} 
+     |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO"} 
 
 str :: Int->Int->Instruccion
 reemplazar :: Int->Int->[Int]->[Int]
