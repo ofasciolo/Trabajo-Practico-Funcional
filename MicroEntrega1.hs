@@ -66,3 +66,8 @@ fp20 = Microprocesador{memoria=replicate 1024 0, acumuladorA = 7, acumuladorB = 
 
 --4.3.4
 at8086 = Microprocesador {memoria =[1..20], acumuladorA = 0, acumuladorB = 0, programCounter = 0, mensajeError = ""}
+
+--3. Entrega 2
+--3.3.3
+ifnz :: Int->Microprocesador->Microprocesador
+ifnz valor = swap.(lodv valor)
