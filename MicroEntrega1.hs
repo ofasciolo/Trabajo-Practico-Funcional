@@ -1,4 +1,5 @@
 module MicroEntrega1 where
+import Text.Show.Functions
 
 --3. Entrega 1
 --3.1 Modelar Micro
