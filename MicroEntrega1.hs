@@ -97,6 +97,17 @@ str addr valor unProcesador = unProcesador{memoria = reemplazar addr valor (memo
 reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
 
+--ifnz
+ifnz :: Microprocesador -> Programa ->Microprocesador
+ifnz unProcesador instrucciones
+	 | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
+	 | otherwise  = unProcesador
+
+
+--depuracion
+
+
+
 --                        Carga y ejecucion
 
 -- ejecutar instruccion
