@@ -7,7 +7,8 @@ data Microprocesador = Microprocesador{
      acumuladorA::Int, 
      acumuladorB::Int, 
      programCounter::Int,
-     mensajeError::String
+     mensajeError::String,
+	 programas :: [Instruccion]
 } deriving Show
 
 
@@ -20,7 +21,9 @@ xt8089 = Microprocesador{
 	 acumuladorA = 0, 
 	 acumuladorB = 0, 
 	 programCounter = 0, 
-	 mensajeError= "" 
+	 mensajeError= "", 
+	 programas = []
+	 
 }
 
 -- xt8088
@@ -29,7 +32,8 @@ xt8088 =  Microprocesador{
      acumuladorA = 0, 
      acumuladorB = 0, 
      programCounter = 0, 
-     mensajeError= "" 
+     mensajeError= "",
+	 programas = []
 	 }
 
  -- fp20
@@ -38,7 +42,8 @@ fp20 = Microprocesador{
      acumuladorA = 7,
      acumuladorB = 24,
      programCounter = 0,
-     mensajeError = ""
+     mensajeError = "",
+	 programas = []
 }
 
 -- at8086
@@ -47,7 +52,8 @@ at8086 = Microprocesador {
 	 acumuladorA = 0,
 	 acumuladorB = 0,
 	 programCounter = 0,
-	 mensajeError = ""
+	 mensajeError = "",
+	 programas = []
 }
  
  
