@@ -35,7 +35,7 @@ xt8088 =  Microprocesador{
      programCounter = 0, 
      mensajeError= "",
 	 programa = []
-	 }
+}
 
  -- fp20
 fp20 = Microprocesador{
@@ -47,6 +47,21 @@ fp20 = Microprocesador{
 	 programa = []
 }
 
+-- microprocesador con memoria infinita
+microInfinito = Microprocesador{
+	 memoria = cycle [0],
+	 acumuladorA = 0, 
+     acumuladorB = 0, 
+     programCounter = 0, 
+     mensajeError= "",
+	 programa = []
+}
+-- ¿Qué sucede al querer cargar y ejecutar el programa que suma 10 y 22 en el procesador con memoria infinita?
+-- Lo ejecuta sin problemas pero al querer verlo por pantalla al ser una lista infinita va a iterar sin fin
+-- y no va a ser posible ver el resultado ya que toda la pantalla va a ser tapada por ceros
+-- ¿Y si queremos saber si la memoria está ordenada (punto anterior)?
+-- Nunca termina de iterar
+
 -- at8086
 at8086 = Microprocesador {
      memoria =[1..20],
@@ -57,6 +72,7 @@ at8086 = Microprocesador {
 	 programa = []
 }
  
+
  
  
 --                        Instrucciones
@@ -111,7 +127,7 @@ ifnz unProcesador instrucciones
 ejecutarinstruccion :: (Instruccion) -> Instruccion 
 ejecutarinstruccion instruccion = instruccion.avanzarCounter
 
--- ejecutar programa
+-- ejecutar programa (lee de derecha a izquierda)
 ejecutar :: Microprocesador -> Programa -> Microprocesador
 ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador
 
@@ -144,6 +160,15 @@ sumatoria :: Microprocesador -> Int
 sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
 
 
---------------------------------------------------------------
+
+--                        Orden 
+
+--saber si la memoria de un procesador esta ordenada
+esMemoriaOrdenada :: Microprocesador -> Bool
+esMemoriaOrdenada unProcesador = comprobarOrden (memoria unProcesador)
+
+-- recibe la memoria y comprueba si esta ordenada de mayor a menor
+comprobarOrden [x] = True
+comprobarOrden (x:y:z) = x >= y && comprobarOrden(y:z)
 
 
