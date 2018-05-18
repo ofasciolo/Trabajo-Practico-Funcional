@@ -102,11 +102,8 @@ ifnz :: Microprocesador -> Programa ->Microprocesador
 ifnz unProcesador instrucciones
 	 | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
 	 | otherwise  = unProcesador
-
-
---depuracion
-
-
+	 
+	 
 
 --                        Carga y ejecucion
 
@@ -131,17 +128,22 @@ ejecutarCargado :: Microprocesador -> Microprocesador
 ejecutarCargado unProcesador = ejecutar unProcesador (programa unProcesador)
 
 
+
+--                        Depuracion
+
+--depurar programa
+depurarPrograma :: Microprocesador -> Programa -> Programa
+depurarPrograma unProcesador programa = filter (innecesarias unProcesador) programa
+
+--instrucciones innecesarias
+innecesarias :: Microprocesador -> (Instruccion) -> Bool
+innecesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
+
+--sumatoria de todos los valores en el microprocesador (acumA, acumB, memoria)
+sumatoria :: Microprocesador -> Int
+sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
+
+
 --------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 
 
