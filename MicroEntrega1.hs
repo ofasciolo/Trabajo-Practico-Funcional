@@ -1,76 +1,118 @@
 module MicroEntrega1 where
 import Text.Show.Functions
 
---3. Entrega 1
---3.1 Modelar Micro
-data Microprocesador = Microprocesador{memoria::[Int] ,acumuladorA::Int, acumuladorB::Int, programCounter::Int,mensajeError::String} deriving Show
-
---3.1.a
-xt8088 =  Microprocesador{memoria = replicate 1024 0 , acumuladorA = 0, acumuladorB = 0,programCounter = 0, mensajeError= ""}
-
---3.2 Punto 2
---3.2.1
 type Instruccion = Microprocesador->Microprocesador
+data Microprocesador = Microprocesador{
+     memoria::[Int] ,
+     acumuladorA::Int, 
+     acumuladorB::Int, 
+     programCounter::Int,
+     mensajeError::String
+} deriving Show
+
+
+
+--                        Procesadores
+
+-- xt8089
+xt8089 = Microprocesador{
+     memoria = [0,0..], 
+	 acumuladorA = 0, 
+	 acumuladorB = 0, 
+	 programCounter = 0, 
+	 mensajeError= "" 
+}
+
+-- xt8088
+xt8088 =  Microprocesador{
+     memoria = replicate 1024 0, 
+     acumuladorA = 0, 
+     acumuladorB = 0, 
+     programCounter = 0, 
+     mensajeError= "" 
+	 }
+
+ -- fp20
+fp20 = Microprocesador{
+     memoria=replicate 1024 0,
+     acumuladorA = 7,
+     acumuladorB = 24,
+     programCounter = 0,
+     mensajeError = ""
+}
+
+-- at8086
+at8086 = Microprocesador {
+     memoria =[1..20],
+	 acumuladorA = 0,
+	 acumuladorB = 0,
+	 programCounter = 0,
+	 mensajeError = ""
+}
+ 
+ 
+ 
+--                        Instrucciones
+
+--nop
 nop :: Instruccion
-nop unProcesador = unProcesador{programCounter = programCounter unProcesador +1}
+nop = id
 
---3.2.2
-avanzar3 :: Instruccion
-avanzar3 = nop.nop.nop
-
---3.3 Punto 3
-
-avanzarCounter :: InstruCcion
+avanzarCounter :: Instruccion
 avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
 
-vaciarAcumulador :: Instruccion
-vaciarAcumulador unProcesador = unProcesador {acumuladorB = 0}
+--lod
+lod :: Int->Instruccion
+lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
---3.3.1
+--add
 add :: Instruccion
-add unProcesador = avanzarCounter.vaciarAcumulador.unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador}
+add unProcesador = unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador, acumuladorB = 0}
 
+--lodv
 lodv :: Int->Instruccion
-lodv valor unProcesador = avanzarCounter.unProcesador{acumuladorA=valor}
+lodv valor unProcesador = unProcesador{acumuladorA=valor}
 
+--swap
 swap :: Instruccion
-swap unProcesador = avanzarCounter.unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador}
+swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador}
 
---3.3.2
-sumarDosValores valor1 valor2 = (add).(lodv valor2).(swap).(lodv valor1)
-
---3.4 Punto 4
---3.4.1
+--divide
 divide :: Instruccion
 divide unProcesador   
-     |acumuladorB unProcesador /=0 = avanzarCounter.vaciarAcumulador.unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador}
+     |acumuladorB unProcesador /=0 = unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador, acumuladorB = 0}
      |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO"} 
+
+--str
+str addr valor unProcesador = unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
 str :: Int->Int->Instruccion
 reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
 
--- el -1 debido a que ellos empiezan desde pos 1, y nosotros desde 0.
 
-str addr valor unProcesador = avanzarCounter.unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
-lod :: Int->Instruccion
-lod addr unProcesador = avanzarCounter.unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
+--                        Ejecutar
 
---3.4.2
-dividirDosValores numerador denominador = (divide).(lod 1).(swap).(lod 2).(str 2 denominador).(str 1 numerador)
+-- ejecutar instruccion
+ejecutarinstruccion :: (Instruccion) -> Instruccion 
+ejecutarinstruccion instruccion = instruccion.avanzarCounter
 
---4 Casos de prueba
---4.2.3
-fp20 = Microprocesador{memoria=replicate 1024 0, acumuladorA = 7, acumuladorB = 24, programCounter = 0, mensajeError = ""}
+-- ejecutar programa
+ejecutar :: Microprocesador -> [Instruccion] -> Microprocesador
+ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador
 
---4.3.4
-at8086 = Microprocesador {memoria =[1..20], acumuladorA = 0, acumuladorB = 0, programCounter = 0, mensajeError = ""}
+--------------------------------------------------------------
+
+
+
+
+
+
 
 --3. Entrega 2
+
+
 --3.3.3
 ifnz :: Int->Microprocesador->Microprocesador
 ifnz valor = swap.(lodv valor)
-
---3.6.6
-xt8089 = Microprocesador{memoria = [0,0..] , acumuladorA = 0, acumuladorB = 0,programCounter = 0, mensajeError= ""}
