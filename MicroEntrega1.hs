@@ -62,6 +62,16 @@ microInfinito = Microprocesador{
 -- ¿Y si queremos saber si la memoria está ordenada (punto anterior)?
 -- Nunca termina de iterar
 
+-- procesador con la memoria desordenada
+microDesorden = Microprocesador {
+     memoria =[2, 5, 1, 0, 6, 9],
+	 acumuladorA = 0,
+	 acumuladorB = 0,
+	 programCounter = 0,
+	 mensajeError = "",
+	 programa = []
+}
+
 -- at8086
 at8086 = Microprocesador {
      memoria =[1..20],
