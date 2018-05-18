@@ -177,8 +177,8 @@ sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + s
 esMemoriaOrdenada :: Microprocesador -> Bool
 esMemoriaOrdenada unProcesador = comprobarOrden (memoria unProcesador)
 
--- recibe la memoria y comprueba si esta ordenada de mayor a menor
+-- recibe la memoria y comprueba si esta ordenada de menor a mayor
 comprobarOrden [x] = True
-comprobarOrden (x:y:z) = x >= y && comprobarOrden(y:z)
+comprobarOrden (x:y:z) = x <= y && comprobarOrden(y:z)
 
 
