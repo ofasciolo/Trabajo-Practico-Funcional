@@ -13,15 +13,6 @@ data Microprocesador = Microprocesador{
 } deriving Show
 
 --Microprocesadores
-microInfinito = Microprocesador{
-     memoria = [0,0..], 
-     acumuladorA = 0, 
-     acumuladorB = 0, 
-     programCounter = 0, 
-     mensajeError= "", 
-     programa = [] 
-}
-
 xt8088 =  Microprocesador{
      memoria = replicate 1024 0, 
      acumuladorA = 0, 
@@ -40,6 +31,14 @@ fp20 = Microprocesador{
      programa = []
 }
 
+microInfinito = Microprocesador{
+     memoria = [0,0..], 
+     acumuladorA = 0, 
+     acumuladorB = 0, 
+     programCounter = 0, 
+     mensajeError= "", 
+     programa = [] 
+}
 -- ¿Qué sucede al querer cargar y ejecutar el programa que suma 10 y 22 en el procesador con memoria infinita?
 -- Lo ejecuta sin problemas pero al querer verlo por pantalla al ser una lista infinita va a iterar sin fin
 -- y no va a ser posible ver el resultado ya que toda la pantalla va a ser tapada por ceros
