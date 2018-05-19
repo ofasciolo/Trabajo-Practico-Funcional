@@ -9,7 +9,7 @@ data Microprocesador = Microprocesador{
      acumuladorB::Int, 
      programCounter::Int,
      mensajeError::String,
-	 programa :: Programa
+     programa :: Programa
 } deriving Show
 
 
@@ -19,12 +19,11 @@ data Microprocesador = Microprocesador{
 -- xt8089
 xt8089 = Microprocesador{
      memoria = [0,0..], 
-	 acumuladorA = 0, 
-	 acumuladorB = 0, 
-	 programCounter = 0, 
-	 mensajeError= "", 
-	 programa = []
-	 
+     acumuladorA = 0, 
+     acumuladorB = 0, 
+     programCounter = 0, 
+     mensajeError= "", 
+     programa = [] 
 }
 
 -- xt8088
@@ -34,7 +33,7 @@ xt8088 =  Microprocesador{
      acumuladorB = 0, 
      programCounter = 0, 
      mensajeError= "",
-	 programa = []
+     programa = []
 }
 
  -- fp20
@@ -44,17 +43,17 @@ fp20 = Microprocesador{
      acumuladorB = 24,
      programCounter = 0,
      mensajeError = "",
-	 programa = []
+     programa = []
 }
 
 -- microprocesador con memoria infinita
 microInfinito = Microprocesador{
-	 memoria = cycle [0],
-	 acumuladorA = 0, 
+     memoria = cycle [0],
+     acumuladorA = 0, 
      acumuladorB = 0, 
      programCounter = 0, 
      mensajeError= "",
-	 programa = []
+     programa = []
 }
 -- ¿Qué sucede al querer cargar y ejecutar el programa que suma 10 y 22 en el procesador con memoria infinita?
 -- Lo ejecuta sin problemas pero al querer verlo por pantalla al ser una lista infinita va a iterar sin fin
@@ -65,21 +64,21 @@ microInfinito = Microprocesador{
 -- procesador con la memoria desordenada
 microDesorden = Microprocesador {
      memoria =[2, 5, 1, 0, 6, 9],
-	 acumuladorA = 0,
-	 acumuladorB = 0,
-	 programCounter = 0,
-	 mensajeError = "",
-	 programa = []
+     acumuladorA = 0,
+     acumuladorB = 0,
+     programCounter = 0,
+     mensajeError = "",
+     programa = []
 }
 
 -- at8086
 at8086 = Microprocesador {
      memoria =[1..20],
-	 acumuladorA = 0,
-	 acumuladorB = 0,
-	 programCounter = 0,
-	 mensajeError = "",
-	 programa = []
+     acumuladorA = 0,
+     acumuladorB = 0,
+     programCounter = 0,
+     mensajeError = "",
+     programa = []
 }
  
 
@@ -126,10 +125,9 @@ reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) list
 --ifnz
 ifnz :: Microprocesador -> Programa ->Microprocesador
 ifnz unProcesador instrucciones
-	 | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
-	 | otherwise  = unProcesador
-	 
-	 
+     | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
+     | otherwise  = unProcesador
+     
 
 --                        Carga y ejecucion
 
