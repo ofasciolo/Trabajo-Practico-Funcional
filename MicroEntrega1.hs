@@ -12,11 +12,7 @@ data Microprocesador = Microprocesador{
      programa :: Programa
 } deriving Show
 
-
-
---                        Procesadores
-
--- xt8089
+--Microprocesadores
 xt8089 = Microprocesador{
      memoria = [0,0..], 
      acumuladorA = 0, 
@@ -26,7 +22,6 @@ xt8089 = Microprocesador{
      programa = [] 
 }
 
--- xt8088
 xt8088 =  Microprocesador{
      memoria = replicate 1024 0, 
      acumuladorA = 0, 
@@ -36,7 +31,6 @@ xt8088 =  Microprocesador{
      programa = []
 }
 
- -- fp20
 fp20 = Microprocesador{
      memoria=replicate 1024 0,
      acumuladorA = 7,
@@ -46,7 +40,7 @@ fp20 = Microprocesador{
      programa = []
 }
 
--- microprocesador con memoria infinita
+
 microInfinito = Microprocesador{
      memoria = cycle [0],
      acumuladorA = 0, 
@@ -61,7 +55,6 @@ microInfinito = Microprocesador{
 -- ¿Y si queremos saber si la memoria está ordenada (punto anterior)?
 -- Nunca termina de iterar
 
--- procesador con la memoria desordenada
 microDesorden = Microprocesador {
      memoria =[2, 5, 1, 0, 6, 9],
      acumuladorA = 0,
@@ -71,7 +64,6 @@ microDesorden = Microprocesador {
      programa = []
 }
 
--- at8086
 at8086 = Microprocesador {
      memoria =[1..20],
      acumuladorA = 0,
@@ -81,102 +73,72 @@ at8086 = Microprocesador {
      programa = []
 }
  
-
- 
- 
---                        Instrucciones
-
---nop
+--Instrucciones
 nop :: Instruccion
 nop = id
 
 avanzarCounter :: Instruccion
 avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
 
---lod
 lod :: Int->Instruccion
 lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
---add
 add :: Instruccion
 add unProcesador = unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador, acumuladorB = 0}
 
---lodv
 lodv :: Int->Instruccion
 lodv valor unProcesador = unProcesador{acumuladorA=valor}
 
---swap
 swap :: Instruccion
 swap unProcesador = unProcesador{acumuladorA = acumuladorB unProcesador, acumuladorB=acumuladorA unProcesador}
 
---divide
 divide :: Instruccion
 divide unProcesador   
      |acumuladorB unProcesador /=0 = unProcesador{acumuladorA = acumuladorA unProcesador `div` acumuladorB unProcesador, acumuladorB = 0}
      |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO"} 
 
---str
 str :: Int->Int->Instruccion
 str addr valor unProcesador = unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
 reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
 
---ifnz
 ifnz :: Microprocesador -> Programa ->Microprocesador
 ifnz unProcesador instrucciones
      | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
      | otherwise  = unProcesador
-     
 
---                        Carga y ejecucion
-
--- ejecutar instruccion
+--Carga y ejecucion
 ejecutarinstruccion :: (Instruccion) -> Instruccion 
 ejecutarinstruccion instruccion = instruccion.avanzarCounter
 
--- ejecutar programa (lee de derecha a izquierda)
-ejecutar :: Microprocesador -> Programa -> Microprocesador
+ejecutar :: Microprocesador -> Programa -> Microprocesador --Lee de derecha a izquierda
 ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador
 
---cargar programa
 cargarPrograma :: Microprocesador -> Programa -> Microprocesador
 cargarPrograma unProcesador prog = unProcesador{programa = prog}
 
---carga y ejecuta un programa
-ejecutarPrograma :: Microprocesador -> Programa -> Microprocesador
+ejecutarPrograma :: Microprocesador -> Programa -> Microprocesador --Carga y ejecuta
 ejecutarPrograma unProcesador programa = ejecutarCargado (cargarPrograma unProcesador programa)
 
---ejecutar programa cargado
 ejecutarCargado :: Microprocesador -> Microprocesador
 ejecutarCargado unProcesador = ejecutar unProcesador (programa unProcesador)
 
-
-
---                        Depuracion
-
---depurar programa
+--Depuracion
 depurarPrograma :: Microprocesador -> Programa -> Programa
 depurarPrograma unProcesador programa = filter (innecesarias unProcesador) programa
 
---instrucciones innecesarias
 innecesarias :: Microprocesador -> (Instruccion) -> Bool
 innecesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
 
---sumatoria de todos los valores en el microprocesador (acumA, acumB, memoria)
 sumatoria :: Microprocesador -> Int
 sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
 
-
-
---                        Orden 
-
---saber si la memoria de un procesador esta ordenada
+--Orden 
 esMemoriaOrdenada :: Microprocesador -> Bool
 esMemoriaOrdenada unProcesador = comprobarOrden (memoria unProcesador)
 
--- recibe la memoria y comprueba si esta ordenada de menor a mayor
-comprobarOrden [x] = True
+comprobarOrden [x] = True  -- recibe la memoria y comprueba si esta ordenada de menor a mayor
 comprobarOrden (x:y:z) = x <= y && comprobarOrden(y:z)
 
 
