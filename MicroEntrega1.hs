@@ -121,7 +121,7 @@ ejecutar :: Microprocesador -> Programa -> Microprocesador --Lee de derecha a iz
 ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador (programa unProcesador)
 
 cargarPrograma :: Microprocesador -> Programa -> Microprocesador
-cargarPrograma unProcesador prog = unProcesador{programa = prog}
+cargarPrograma unProcesador unPrograma = unProcesador{programa = unPrograma}
 
 ejecutarPrograma :: Microprocesador -> Programa -> Microprocesador --Carga y ejecuta
 ejecutarPrograma unProcesador programa = ejecutarCargado (cargarPrograma unProcesador programa)
