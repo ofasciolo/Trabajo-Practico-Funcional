@@ -66,7 +66,14 @@ at8086 = Microprocesador {
  
 --Instrucciones
 nop :: Instruccion
-nop = unProcesador {programCounter = programCounter unProcesador +1}
+nop = avanzarCounter
+
+avanzarCounter :: Instruccion
+avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
+
+nopN :: Int -> Instruccion
+nopN 1 = nop
+nopN n = nop.(nopN (n-1))
 
 lod :: Int->Instruccion
 lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
