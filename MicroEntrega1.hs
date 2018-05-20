@@ -126,10 +126,10 @@ ejecutarCargado unProcesador = ejecutar unProcesador (programa unProcesador)
 
 --Depuracion
 depurarPrograma :: Microprocesador -> Programa -> Programa
-depurarPrograma unProcesador programa = filter (innecesarias unProcesador) programa
+depurarPrograma unProcesador programa = filter (necesarias unProcesador) programa
 
-innecesarias :: Microprocesador -> (Instruccion) -> Bool
-innecesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
+necesarias :: Microprocesador -> (Instruccion) -> Bool
+necesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
 
 sumatoria :: Microprocesador -> Int
 sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
