@@ -118,7 +118,7 @@ ejecutarInstruccion instruccion unProcesador
 	| otherwise = unProcesador
 
 ejecutar :: Microprocesador -> Programa -> Microprocesador --Lee de derecha a izquierda
-ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador (programa unProcesador)
+ejecutar unProcesador = foldr (ejecutarInstruccion) unProcesador
 
 cargarPrograma :: Microprocesador -> Programa -> Microprocesador
 cargarPrograma unProcesador unPrograma = unProcesador{programa = unPrograma}
