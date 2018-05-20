@@ -71,8 +71,15 @@ nop = avanzarCounter
 avanzarCounter :: Instruccion
 avanzarCounter unProcesador = unProcesador {programCounter = programCounter unProcesador +1}
 
+leerMemoria :: [Int] -> Int -> Int
+leerMemoria = (!!)
+memoriaOcupada :: Microprocesador -> Int
+memoriaOcupada unProcesador = length (memoria unProcesador)
+
 lod :: Int->Instruccion
-lod addr unProcesador = unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
+lod addr unProcesador 
+	|addr > memoriaOcupada unProcesador = errorMem unProcesador
+	|otherwise = unProcesador{acumuladorA=memoria unProcesador !! (addr-1)}  --usamos la funcion !! para acceder al item addr de la lista (-1 para acomodar con lo pedido)
 
 add :: Instruccion
 add unProcesador = unProcesador{acumuladorA=acumuladorA unProcesador + acumuladorB unProcesador, acumuladorB = 0}
