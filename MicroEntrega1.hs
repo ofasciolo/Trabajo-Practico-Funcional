@@ -43,7 +43,8 @@ microInfinito = Microprocesador{
 -- Lo ejecuta sin problemas pero al querer verlo por pantalla al ser una lista infinita va a iterar sin fin
 -- y no va a ser posible ver el resultado ya que toda la pantalla va a ser tapada por ceros
 -- ¿Y si queremos saber si la memoria está ordenada (punto anterior)?
--- Nunca termina de iterar
+-- No podemos comprobarlo, pero sí podemos identificar si está DES-ordenada, viendo item por item si 
+-- esta ordenada hasta llegar a uno que no lo este.
 
 microDesorden = Microprocesador {
      memoria =[2, 5, 1, 0, 6, 9],
