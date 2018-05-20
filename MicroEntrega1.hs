@@ -99,8 +99,8 @@ reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
 
 ifnz :: Microprocesador -> Programa ->Microprocesador
-ifnz unProcesador instrucciones
-     | acumuladorA unProcesador /=0 = ejecutar unProcesador instrucciones
+ifnz unProcesador programa
+     | acumuladorA unProcesador /=0 = ejecutar unProcesador programa
      | otherwise  = unProcesador
 
 --Carga y ejecucion
