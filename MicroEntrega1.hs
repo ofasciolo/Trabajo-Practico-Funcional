@@ -108,7 +108,7 @@ ejecutarinstruccion :: (Instruccion) -> Instruccion
 ejecutarinstruccion instruccion = instruccion.avanzarCounter
 
 ejecutar :: Microprocesador -> Programa -> Microprocesador --Lee de derecha a izquierda
-ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador
+ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador (programa unProcesador)
 
 cargarPrograma :: Microprocesador -> Programa -> Microprocesador
 cargarPrograma unProcesador prog = unProcesador{programa = prog}
