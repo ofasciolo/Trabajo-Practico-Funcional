@@ -101,6 +101,8 @@ str addr valor unProcesador
 	| addr > memoriaOcupada unProcesador = errorMem unProcesador
 	| otherwise = unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
+errorMem :: Instruccion
+errorMem unProcesador = unProcesador{mensajeError="DIRECCION DE MEMORIA VACIA O NO VALIDA"}	
 reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
 
