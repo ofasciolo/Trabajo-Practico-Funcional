@@ -96,7 +96,10 @@ divide unProcesador
      |otherwise = unProcesador{mensajeError = "DIVISION BY ZERO"} 
 
 str :: Int->Int->Instruccion
-str addr valor unProcesador = unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
+str addr valor unProcesador
+	| addr < 1 = errorMem unProcesador
+	| addr > memoriaOcupada unProcesador = errorMem unProcesador
+	| otherwise = unProcesador{memoria = reemplazar addr valor (memoria unProcesador)}
 
 reemplazar :: Int->Int->[Int]->[Int]
 reemplazar addr valor lista = (take (addr-1) lista) ++ (valor : drop (addr) lista) 
