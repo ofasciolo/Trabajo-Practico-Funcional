@@ -107,8 +107,10 @@ ifnz unProcesador programa
      | otherwise  = unProcesador
 
 --Carga y ejecucion
-ejecutarinstruccion :: (Instruccion) -> Instruccion 
-ejecutarinstruccion instruccion = instruccion.avanzarCounter
+ejecutarInstruccion :: Instruccion -> Microprocesador -> Microprocesador 
+ejecutarInstruccion instruccion unProcesador
+	|((==0).length.mensajeError) unProcesador = (instruccion.avanzarCounter) unProcesador
+	| otherwise = unProcesador
 
 ejecutar :: Microprocesador -> Programa -> Microprocesador --Lee de derecha a izquierda
 ejecutar unProcesador = foldr (ejecutarinstruccion) unProcesador (programa unProcesador)
