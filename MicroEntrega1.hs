@@ -132,4 +132,10 @@ esMemoriaOrdenada unProcesador = comprobarOrden (memoria unProcesador)
 comprobarOrden [x] = True  -- recibe la memoria y comprueba si esta ordenada de menor a mayor
 comprobarOrden (x:y:z) = x <= y && comprobarOrden(y:z)
 
+--Programas
+sumar10con22 :: Programa
+sumar10con22 = [add,lodv 22, swap, lodv 10]
+
+dividir2por0 :: Programa
+dividir2por0 = [swap,divide,lod 1, swap, lod 2, str 2 0, str 1 2]
 
