@@ -137,5 +137,7 @@ sumar10con22 :: Programa
 sumar10con22 = [add,lodv 22, swap, lodv 10]
 
 dividir2por0 :: Programa
-dividir2por0 = [swap,divide,lod 1, swap, lod 2, str 2 0, str 1 2]
+dividir2por0 = [divide,lod 1, swap, lod 2, str 2 0, str 1 2]
 
+casoDePrueba :: Programa
+casoDePrueba = [swap,divide,lod 1, swap, lod 2, str 2 0, str 1 2]
