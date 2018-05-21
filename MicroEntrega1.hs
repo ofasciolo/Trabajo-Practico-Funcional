@@ -132,6 +132,7 @@ depurarPrograma unProcesador programa = filter (necesarias unProcesador) program
 
 necesarias :: Microprocesador -> (Instruccion) -> Bool
 necesarias unProcesador instruccion = (/= 0).sumatoria.instruccion $(unProcesador)
+--   ORIGINALMENTE ERA: necesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
 
 sumatoria :: Microprocesador -> Int
 sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
