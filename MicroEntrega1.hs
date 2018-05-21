@@ -123,9 +123,6 @@ ejecutar unProcesador = foldr (ejecutarInstruccion) unProcesador
 cargarPrograma :: Microprocesador -> Programa -> Microprocesador
 cargarPrograma unProcesador unPrograma = unProcesador{programa = unPrograma}
 
-ejecutarPrograma :: Microprocesador -> Programa -> Microprocesador --Carga y ejecuta
-ejecutarPrograma unProcesador programa = ejecutarCargado (cargarPrograma unProcesador programa)
-
 ejecutarCargado :: Microprocesador -> Microprocesador
 ejecutarCargado unProcesador = ejecutar unProcesador (programa unProcesador)
 
@@ -134,7 +131,7 @@ depurarPrograma :: Microprocesador -> Programa -> Programa
 depurarPrograma unProcesador programa = filter (necesarias unProcesador) programa
 
 necesarias :: Microprocesador -> (Instruccion) -> Bool
-necesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
+necesarias unProcesador instruccion = (/= 0).sumatoria.instruccion $(unProcesador)
 
 sumatoria :: Microprocesador -> Int
 sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
