@@ -135,7 +135,8 @@ necesarias unProcesador instruccion = (/= 0).sumatoria.instruccion $(unProcesado
 --   ORIGINALMENTE ERA: necesarias unProcesador instruccion = sumatoria(instruccion unProcesador) /= 0
 
 sumatoria :: Microprocesador -> Int
-sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
+sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + (sum.memoria $ (unProcesador))
+-- ANTES ERA: sumatoria unProcesador = acumuladorA unProcesador + acumuladorB unProcesador + sum (memoria unProcesador)
 
 --Orden 
 esMemoriaOrdenada :: Microprocesador -> Bool
